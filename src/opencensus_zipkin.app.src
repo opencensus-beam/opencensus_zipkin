@@ -1,0 +1,16 @@
+{application, opencensus_zipkin,
+ [{description, "OpenCensus Zipkin reporter"},
+  {vsn, "git"},
+  {registered, []},
+  {applications,
+   [kernel,
+    stdlib,
+    inets,
+    jsx
+   ]},
+  {env,[]},
+  {modules, []},
+
+  {licenses, ["Apache 2.0"]},
+  {links, [{"Github", "https://github.com/opencensus-beam/opencensus_zipkin"}]}
+ ]}.
