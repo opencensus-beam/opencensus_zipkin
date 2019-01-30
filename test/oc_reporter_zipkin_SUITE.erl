@@ -19,7 +19,9 @@ init_per_suite(Config) ->
     Config.
 
 end_per_suite(_Config) ->
+    ok = application:unload(opencensus),
     ok.
+
 init_per_testcase(zipkin_reporter, Config) ->
     application:set_env(opencensus, reporter, {oc_reporter_zipkin, [{address, "http://ct-host:9411/endpoint"},
                                                                     {local_endpoint,
