@@ -23,9 +23,9 @@ end_per_suite(_Config) ->
     ok.
 
 init_per_testcase(zipkin_reporter, Config) ->
-    application:set_env(opencensus, reporter, {oc_reporter_zipkin, [{address, "http://ct-host:9411/endpoint"},
-                                                                    {local_endpoint,
-                                                                     #{<<"serviceName">> => "ct-service"}}]}),
+    application:set_env(opencensus, reporters, [{oc_reporter_zipkin, [{address, "http://ct-host:9411/endpoint"},
+                                                                      {local_endpoint,
+                                                                       #{<<"serviceName">> => "ct-service"}}]}]),
     application:set_env(opencensus, sampler, {oc_sampler_always, []}),
 
     {ok, _} = application:ensure_all_started(opencensus),

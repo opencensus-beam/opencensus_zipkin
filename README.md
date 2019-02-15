@@ -8,8 +8,8 @@ To use, add `opencensus_zipkin` dependency as a runtime application (in rebar3 t
 
 ``` erlang
 {opencensus, [
-    {reporter, {oc_reporter_zipkin, [{address, "http://localhost:9411/api/v2/spans"},
-                                     {local_endpoint, #{<<"serviceName">> => <<"service">>}]}}}
+    {reporters, [{oc_reporter_zipkin, [{address, "http://localhost:9411/api/v2/spans"},
+                                       {local_endpoint, #{<<"serviceName">> => <<"service">>}]}}]}
     ...]}
 ```
 
