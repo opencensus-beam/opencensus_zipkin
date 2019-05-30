@@ -53,6 +53,7 @@ zipkin_reporter(_Config) ->
         Child = oc_trace:start_span(<<"span-name">>,
                                     Parent,
                                     #{attributes => #{<<"attr1">> => <<"val1">>,
+                                                      <<"status">> => 200,
                                                       <<"attr_as_function">> =>
                                                           fun () -> <<"val2">> end}}),
 
@@ -96,6 +97,7 @@ zipkin_reporter(_Config) ->
                                 <<"shared">> := false,
                                 <<"tags">> :=
                                     #{<<"attr1">> := <<"val1">>,
+                                      <<"status">> := <<"200">>,
                                       <<"attr_as_function">> := <<"val2">>},
                                 <<"timestamp">> := _,
                                 <<"traceId">> := ParentTraceId}],
