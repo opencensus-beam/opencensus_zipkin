@@ -112,16 +112,22 @@ to_string(Value) when is_list(Value) ;
 to_string(Value) ->
     io_lib:format("~p", [Value]).
 
-to_tag(_Name, Value) when is_function(Value) ->
-    Value();
-to_tag(_Name, Value) when is_list(Value) ->
+to_binary_string(Name, Value) when is_function(Value) ->
+    to_binary_string(Name, Value());
+to_binary_string(_Name, Value) when is_list(Value) ->
     list_to_binary(Value);
-to_tag(_Name, Value) ->
+to_binary_string(_Name, Value) when is_integer(Value) ->
+    integer_to_binary(Value);
+to_binary_string(_Name, Value) when is_float(Value) ->
+    float_to_binary(Value);
+to_binary_string(_Name, Value) when is_atom(Value) ->
+    atom_to_binary(Value, utf8);
+to_binary_string(_Name, Value) ->
     Value.
 
 to_tags(Attributes) ->
     maps:map(fun(Name, Value) ->
-                     to_tag(Name, Value)
+                     to_binary_string(Name, Value)
              end, Attributes).
 
 zipkin_address(Options) ->
