@@ -49,6 +49,8 @@ report(Spans, {Address, LocalEndpoint}) ->
             case httpc:request(post, {Address, [], "application/json", JSON}, [], []) of
                 {ok, {{_, 202, _}, _, _}} ->
                     ok;
+                {ok, {{_, 200, _}, _, _}} ->
+                    ok;
                 {ok, {{_, Code, _}, _, Message}} ->
                     ?LOG_ERROR("Zipkin: Unable to send spans, Zipkin reported an error: ~p : ~p",
                               [Code, Message]);
