@@ -65,7 +65,7 @@ report(Spans, {Address, LocalEndpoint}) ->
 
 zipkin_span(Span, LocalEndpoint) ->
     (optional_fields(Span))#{
-       <<"traceId">> => iolist_to_binary(io_lib:format("~32.16.0b", [Span#span.trace_id])),
+       <<"traceId">> => format_trace_id(Span#span.trace_id),
        <<"name">> => iolist_to_binary(Span#span.name),
        <<"id">> => iolist_to_binary(io_lib:format("~16.16.0b", [Span#span.span_id])),
        <<"timestamp">> => wts:to_absolute(Span#span.start_time),
@@ -77,6 +77,11 @@ zipkin_span(Span, LocalEndpoint) ->
        <<"annotations">> => to_annotations(Span#span.time_events),
        <<"tags">> => to_tags(Span#span.attributes) %% TODO: merge with oc_tags?
      }.
+
+format_trace_id(TraceID) when bit_size(TraceID) == 64 ->
+    iolist_to_binary(io_lib:format("~16.16.0b", [TraceID]));
+format_trace_id(TraceID) ->
+    iolist_to_binary(io_lib:format("~32.16.0b", [TraceID])).
 
 to_annotations(TimeEvents) ->
     to_annotations(TimeEvents, []).
