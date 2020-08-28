@@ -78,9 +78,11 @@ zipkin_span(Span, LocalEndpoint) ->
        <<"tags">> => to_tags(Span#span.attributes) %% TODO: merge with oc_tags?
      }.
 
-format_trace_id(TraceID) when bit_size(TraceID) == 64 ->
-    iolist_to_binary(io_lib:format("~16.16.0b", [TraceID]));
 format_trace_id(TraceID) ->
+    format_trace_id(TraceID, binary:encode_unsigned(TraceID)).
+format_trace_id(TraceID, TraceIDBin) when bit_size(TraceIDBin) == 64 ->
+    iolist_to_binary(io_lib:format("~16.16.0b", [TraceID]));
+format_trace_id(TraceID, _) ->
     iolist_to_binary(io_lib:format("~32.16.0b", [TraceID])).
 
 to_annotations(TimeEvents) ->
